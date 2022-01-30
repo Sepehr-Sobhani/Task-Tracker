@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Header title="Task Tracker" />
-    <Tasks :tasks="tasks"/>
+    <Header title="Task Tracker"/>
+    <Tasks :tasks="tasks" @delete-task="deleteTask"/>
   </div>
 </template>
 
@@ -21,28 +21,35 @@ export default {
       tasks: []
     };
   },
-  created() {
-  this.tasks = [
-    {
-      "id": "1",
-      "text": "Doctors Appointment",
-      "day": "March 5th at 2:30pm",
-      "reminder": true
-    },
-    {
-      "id": "2",
-      "text": "Meeting with boss",
-      "day": "March 6th at 1:30pm",
-      "reminder": true
-    },
-    {
-      "id": "3",
-      "text": "Food shopping",
-      "day": "March 7th at 2:00pm",
-      "reminder": false
+  methods: {
+    deleteTask(id) {
+      if (confirm("Are you sure you want to delete this task?")) {
+        this.tasks = this.tasks.filter(task => task.id !== id);
+      }
     }
-  ]
-    },
+  },
+  created() {
+    this.tasks = [
+      {
+        "id": "1",
+        "text": "Doctors Appointment",
+        "day": "March 5th at 2:30pm",
+        "reminder": true
+      },
+      {
+        "id": "2",
+        "text": "Meeting with boss",
+        "day": "March 6th at 1:30pm",
+        "reminder": true
+      },
+      {
+        "id": "3",
+        "text": "Food shopping",
+        "day": "March 7th at 2:00pm",
+        "reminder": false
+      }
+    ]
+  },
 };
 </script>
 
@@ -68,6 +75,7 @@ body {
   padding: 30px;
   border-radius: 5px;
 }
+
 .btn {
   display: inline-block;
   background: #000;
@@ -81,12 +89,15 @@ body {
   font-size: 15px;
   font-family: inherit;
 }
+
 .btn:focus {
   outline: none;
 }
+
 .btn:active {
   transform: scale(0.98);
 }
+
 .btn-block {
   display: block;
   width: 100%;

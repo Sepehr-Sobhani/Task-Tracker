@@ -1,6 +1,8 @@
 <template>
-  <div class="task">
-    <h3>{{ task.text }}</h3>
+  <div :class="[task.reminder ? 'reminder' : '', 'task']">
+    <h3>{{ task.text }}
+      <i class="fas fa-times" @click="onDelete(task.id)"></i>
+    </h3>
     <p>{{ task.day }}</p>
   </div>
 </template>
@@ -10,7 +12,12 @@ export default {
   name: "Task",
   props: {
     task: Object,
-  }
+  },
+  methods: {
+    onDelete(id) {
+      this.$emit('delete-task', id);
+    },
+  },
 }
 </script>
 
